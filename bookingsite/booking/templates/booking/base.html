@@ -24,7 +24,11 @@
     <div class="menu">
         {% if request.user.is_authenticated %}
             {% for item in auth_menu %}
-                <div class="menu-item"><a href="{% url item.url_name %}">{{item.title}}</a></div>
+                {% if menu_item_selected == item.title %}
+                    <div class="selected-menu-item">{{item.title}}</div>
+                {% else %}
+                    <div class="menu-item"><a href="{% url item.url_name %}">{{item.title}}</a></div>
+                {% endif%}
             {% endfor %}
         {% else %}
             {% for item in unauth_menu %}

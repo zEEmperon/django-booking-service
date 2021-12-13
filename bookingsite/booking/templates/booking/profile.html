@@ -2,11 +2,46 @@
 {% load static %}
 
 {% block content %}
+<div class="profile-content-block">
+    <div class="profile-welcome-header">Welcome, {{ request.user.username }}</div>
+    {% if bookings %}
+    <div class="profile-welcome-header lighter-blue-header">There are your bookings</div>
+    <table id="bookings-table">
+        <tr>
+            <th>№</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Arrival</th>
+            <th>Departure</th>
+            <th>Total price</th>
+            <th>Status</th>
+        </tr>
+        {% for booking in bookings %}
+          <tr>
+            <td>{{ booking.pk }}</td>
+              <td><a class="link-offer" href="{{ booking.offer.get_absolute_url }}">{{ booking.offer.name |truncatechars:40 }}</a></td>
+            <td>{{ booking.offer.get_lodging_type_display }}</td>
+            <td>{{ booking.arrival_date  }}</td>
+            <td>{{ booking.departure_date }}</td>
+            <td>{{ booking.get_total_price }} $</td>
+            <td>
+                {% if booking.state == 'P' %}<div class="proccessing-text-style"> {{ booking.get_state_display }} </div>
+              {% elif booking.state == 'A' %} <div class="accepted-text-style"> {{ booking.get_state_display }} </div>
+              {% elif booking.state == 'R' %} <div class="rejected-text-style"> {{ booking.get_state_display }} </div>
+              {% endif %}
+            </td>
+              {% if not booking.is_past_due and booking.state == 'P' %}
+              <td><a class="link-delete" href="{% url 'booking:delete_booking' booking.pk%}">Delete</a></td>
+              {% endif %}
+          </tr>
+        {% endfor%}
+    </table>
+    {% else %}
+    <div class="profile-welcome-header lighter-blue-header">You don`t have bookings yet:)</div>
+    {% endif %}
+</div>
 
-My profile
 
-<!--{% for b in bookings %}-->
-<!--<p>{{b.offer.name}}</p>-->
-<!--{% endfor %}-->
+
 
 {% endblock content %}

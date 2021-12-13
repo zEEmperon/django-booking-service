@@ -3,6 +3,7 @@
 {% load booking_extras %}
 
 {% block content %}
+{% if offers %}
 <div class="search-block">
 
     <div class="form-block" id="filter-form-block">
@@ -213,6 +214,10 @@
 
                 </div>
         {% endfor %}
+
             </div>
+{% else %}
+    <div class="profile-welcome-header lighter-blue-header">No offers currently available:)</div>
+{% endif %}
 
 {% endblock content %}

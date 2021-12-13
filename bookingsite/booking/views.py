@@ -21,7 +21,7 @@ class IndexFilterView(DataMixin, FilterView):
 
         def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
-            c_def = self.get_user_context(title='Main')
+            c_def = self.get_user_context(title='Booking service')
             context = dict(list(context.items()) + list(c_def.items()))
             return context
 
@@ -50,7 +50,7 @@ class CreateBookingView(LoginRequiredMixin, DataMixin,  generic.DetailView):
         form = BookingForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('booking:index')
+            return redirect('booking:profile')
         return redirect(request.META['HTTP_REFERER'])
 
 class OfferDetailView(DataMixin, generic.DetailView):
@@ -102,6 +102,13 @@ def logout_view(request):
     logout(request)
     return redirect('booking:index')
 
+def delete_booking_view(request, pk):
+    if request.user.is_authenticated:
+        booking = Booking.objects.get(pk=pk)
+        if booking and booking.user.pk is request.user.pk:
+            booking.delete()
+    return redirect('booking:profile')
+
 class ProfileView (LoginRequiredMixin,DataMixin, generic.ListView):
     login_url = 'booking:sign_in'
     template_name = 'booking/profile.html'
@@ -109,11 +116,11 @@ class ProfileView (LoginRequiredMixin,DataMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        title = 'My profile'
+        title = 'Profile'
         c_def = self.get_user_context(title=title, menu_item_selected=title)
         context = dict(list(context.items()) + list(c_def.items()))
         return context
 
     def get_queryset(self):
-        return Booking.objects.filter(user__pk=self.request.user.pk)
+        return Booking.objects.filter(user__pk=self.request.user.pk).order_by('-pk')
 

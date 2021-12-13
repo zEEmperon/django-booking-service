@@ -685,3 +685,77 @@ body {
     font-size: 1.2vw;
     max-width: 23vw;
 }
+
+#bookings-table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1.5vw;
+}
+
+#bookings-table td, #bookings-table th {
+  border: 1px solid #ddd;
+  padding: 0.4vw;
+  text-align: center;
+}
+
+#bookings-table tr:nth-child(even){background-color: #f2f2f2;}
+
+#bookings-table tr:hover {background-color: #ddd;}
+
+#bookings-table th {
+  padding-top: 0.5vw;
+  padding-bottom: 0.5vw;
+  background-color: #2E5989;
+  color: white;
+}
+
+.profile-content-block {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-welcome-header {
+    font-size: 2vw;
+    font-weight: bold;
+    margin-bottom: 2vw;
+    margin-top: 1.5vw;
+    color: #003580;
+}
+
+.lighter-blue-header {
+    margin-top: 0vw;
+    color: #2E5989;
+}
+
+.link-offer {
+    text-decoration: none;
+    color: #003580;
+}
+
+.link-offer:hover {
+    color: #137fd1;
+}
+
+.link-delete {
+    color: #c41212;
+    text-decoration: none;
+}
+
+.link-delete:hover {
+    color: #800b0b;
+}
+
+.proccessing-text-style {
+    color: #ada500;
+}
+
+.accepted-text-style {
+    color: #00ad3a;
+}
+
+.rejected-text-style {
+    color: #ad1100;
+}

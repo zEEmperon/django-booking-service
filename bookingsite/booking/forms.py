@@ -1,5 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
+from django.core.exceptions import ValidationError
+
 from .models import *
 import datetime
 
@@ -18,6 +20,19 @@ class LoginUserForm(AuthenticationForm):
 
 
 class BookingForm (forms.ModelForm):
+
+    def clean_arrival_date(self):
+        self.arrival_date = self.cleaned_data['arrival_date']
+        if self.arrival_date <= datetime.date.today():
+            raise ValidationError('You can`t create booking in past')
+        return self.arrival_date
+
+    def clean_departure_date(self):
+        departure_date = self.cleaned_data['departure_date']
+        if departure_date <= self.arrival_date:
+            raise ValidationError('Departure date can`t be less than arrival date')
+        return departure_date
+
     class Meta:
         model = Booking
         fields = '__all__'

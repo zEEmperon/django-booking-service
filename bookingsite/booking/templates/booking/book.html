@@ -15,8 +15,10 @@
 
 
       <div class="form-field"><label class="form-label" for="id_arrival_date">Arrival date:</label> <input class="form-input" type="date" name="arrival_date" required id="id_arrival_date"></div>
+      <div class="form-error">{{ arrival_date.errors }}</div>
 
         <div class="form-field"><label class="form-label" for="id_departure_date">Departure date:</label> <input type="date" class="form-input" name="departure_date" required id="id_departure_date"></div>
+      <div class="form-error">{{ arrival_date.errors }}</div>
 
       <div class="form-field"><label class="form-label" for="id_payment_method">Payment method:</label>
           <select class="form-input form-combobox" id="book-payment-method-combobox" name="payment_method" id="id_payment_method">

@@ -11,5 +11,6 @@ urlpatterns = [
     path('sign_in/', views.LoginUser.as_view(), name='sign_in'),
     path('sign_up/', views.RegisterUser.as_view(), name='sign_up'),
     path('logout/', views.logout_view, name='logout'),
-    path('profile/', views.ProfileView.as_view(), name='profile')
+    path('profile/', views.ProfileView.as_view(), name='profile'),
+    path('bookings/<int:pk>/delete', views.delete_booking_view, name='delete_booking')
 ]
