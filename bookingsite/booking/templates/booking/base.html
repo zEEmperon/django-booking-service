@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'booking/css/styles.css' %}" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="{% static 'booking/images/logo.svg' %}" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+</head>
+
+<body>
+
+{% block header %}
+<div class="header">
+    <div class="logo">
+            <a href="{% url 'booking:index' %}"><img class='logo-image' src="{% static 'booking/images/logo.svg' %}"></a>
+    </div>
+    <div class="menu">
+        {% if request.user.is_authenticated %}
+            {% for item in auth_menu %}
+                <div class="menu-item"><a href="{% url item.url_name %}">{{item.title}}</a></div>
+            {% endfor %}
+        {% else %}
+            {% for item in unauth_menu %}
+                {% if menu_item_selected == item.title %}
+                    <div class="selected-menu-item">{{item.title}}</div>
+                {% else %}
+                    <div class="menu-item"><a href="{% url item.url_name %}">{{item.title}}</a></div>
+                {% endif%}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock header %}
+
+<div class="body-content">
+    {% block content %}
+    {% endblock content %}
+</div>
+
+
+</body>
+</html>

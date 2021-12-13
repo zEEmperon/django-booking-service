@@ -1,0 +1,65 @@
+{% extends 'booking/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="details-content-block">
+
+        <div class="offer-detail-block offer-detail-header">
+            <p class="offer-detail-header-text">{{object.name}}</p>
+        </div>
+
+        <div class="offer-image">
+                <img src="{% get_media_prefix %}{{ object.image }}" class="offer-thumbnailimage offer-detail-image">
+                <p class="offer-onimage" id="offer-detail-onimage-text">{{ object.get_lodging_type_display}}</p>
+                <div class="offer-onimage" id="offer-detail-onimage-persons">
+                    {% with ''|center:object.places as range %}
+                    {% for _ in range %}
+                    <img src="{% static 'booking/images/man_figure.svg' %}" class="offer-man-figure-image">
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+                    {% if object.isKitchen or object.isConditioner or object.isBreakfast or object.isWifi %}
+                        <div class="offer-onimage offer-detail-onimage-services">
+
+                            <div class="offer-services-block">
+                            <div class="offer-service-spacer"></div>
+                            {%if object.isKitchen%}
+                                <img class="service-thumbnailimage" title='Kitchen' src="{% static 'booking/images/fork-spoon.svg' %}">
+                                <div class="offer-service-spacer"></div>
+                            {% endif %}
+                            {%if object.isConditioner%}
+                                <img class="service-thumbnailimage" title='Conditioner' src="{% static 'booking/images/air-conditioner.svg' %}">
+                                 <div class="offer-service-spacer"></div>
+                            {% endif %}
+                            {%if object.isBreakfast%}
+                                <img class="service-thumbnailimage" title='Breakfast' src="{% static 'booking/images/mug.svg' %}">
+                                 <div class="offer-service-spacer"></div>
+                            {% endif %}
+                            {%if object.isWifi%}
+                                <img class="service-thumbnailimage" title='Wi-Fi' src="{% static 'booking/images/wifi.svg' %}">
+                                 <div class="offer-service-spacer"></div>
+                            {% endif %}
+                            </div>
+
+                        </div>
+                    {% endif %}
+                <div class="offer-onimage offer-detail-onimage-book-block">
+                    <div class="offer-details-price-info-block">
+                    <p class="offer-price-caption black-text">{{object.night_price}} $</p>
+                    <p class="offer-price-additional-text-block black-text">(per night)</p>
+                </div>
+                    <a class="offer-detail-book-button" href="{% url 'booking:book' object.slug %}">Book now</a>
+                </div>
+            </div>
+
+        <div class="offer-detail-block">
+            <div class="offer-detail-description-header">
+                <p class="offer-detail-header-text">Description</p>
+            </div>
+            <div class="offer-detail-description-block">
+                <div class="offer-detail-description-text">{{object.description|linebreaks}}</div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends 'booking/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="book-content-main-block">
+<div class="form-block">
+  <div class="form-block-header">
+    <p class="form-block-header-text">Make booking</p>
+  </div>
+  <div class="form-contains-block">
+
+    <form method="post">
+  {% csrf_token %}
+    <input type="hidden" readonly name="offer" required value="{{ object.pk}}" id="id_offer">
+
+
+      <div class="form-field"><label class="form-label" for="id_arrival_date">Arrival date:</label> <input class="form-input" type="date" name="arrival_date" required id="id_arrival_date"></div>
+
+        <div class="form-field"><label class="form-label" for="id_departure_date">Departure date:</label> <input type="date" class="form-input" name="departure_date" required id="id_departure_date"></div>
+
+      <div class="form-field"><label class="form-label" for="id_payment_method">Payment method:</label>
+          <select class="form-input form-combobox" id="book-payment-method-combobox" name="payment_method" id="id_payment_method">
+            <option value="Cash" selected>Cash</option>
+
+            <option value="Cart">Cart</option>
+          </select>
+      </div>
+
+      <div class="form-non-field-error">{{ form.non_field_errors }}</div>
+
+        <div class="book-offer-block">
+        <div class="book-offer-paragraph"><b>Name:</b> {{ object.name |truncatechars:40 }}</div>
+        <div class="book-offer-paragraph"><b>Type:</b>  {{ object.get_lodging_type_display }}</div>
+          <div class="book-offer-paragraph"><b>Per night price:</b>  {{ object.night_price }} USD</div>
+          <div class="book-offer-paragraph"><b>Places:</b>  {{ object.places }}</div>
+          <div class="book-offer-paragraph"><b>Services:</b>  Air conditioner ({%if object.isConditioner %}+{% else %}-{% endif %}), Wifi ({%if object.isWifi %}+{% else %}-{% endif %}), Kitchen ({%if object.isKitchen %}+{% else %}-{% endif %}), Breakfast ({%if object.isBreakfast %}+{% else %}-{% endif %})</div>
+        </div>
+
+      <div class="form-block-submit-button-block">
+      <button class="form-block-submit-button" type="submit">Book</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+</div>
+
+
+{% endblock content %}

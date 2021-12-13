@@ -1,0 +1,218 @@
+{% extends 'booking/base.html' %}
+{% load static %}
+{% load booking_extras %}
+
+{% block content %}
+<div class="search-block">
+
+    <div class="form-block" id="filter-form-block">
+  <div class="form-block-header" id="filter-form-block-header">
+    <p class="form-block-header-text">Filter</p>
+  </div>
+  <div class="form-contains-block">
+
+    <form method="get">
+        {% csrf_token %}
+<div class="form-field filter-form-field"><label class="filter-form-label" for="name_input">Name:</label><input class="form-input filter-form-input" type="text" name="name" id="name_input" value="{{request.GET.name}}"></div>
+
+ <div class="form-field filter-form-field"><label class="filter-form-label" for="id_night_price_0">Price:</label>
+     <div class="form-two-fields-in-row"><input class="form-input filter-form-input filter-form-input-number-field" type="number" name="night_price_min" id="id_night_price_0" placeholder="min" min="0" value="{{request.GET.night_price_min}}">
+
+<input class="form-input filter-form-input filter-form-input-number-field" type="number" name="night_price_max" id="id_night_price_1" placeholder="max" min="0" value="{{request.GET.night_price_max}}">
+         </div>
+
+ </div>
+
+        <div class="filter-table-block">
+                <div class="filter-service-header">
+                    <p class="filter-service-header-text filter-service-header-text-main-column">Service</p>
+                    <p class="filter-service-header-text filter-service-header-text-radiobutton-column">-</p>
+                    <p class="filter-service-header-text filter-service-header-text-radiobutton-column">Yes</p>
+                    <p class="filter-service-header-text filter-service-header-text-radiobutton-column">No</p>
+                </div>
+
+                <div class="filter-service-row">
+                    <img class="service-thumbnailimage filter-service-thumbnailimage" title='Kitchen' src="{% static 'booking/images/fork-spoon.svg' %}">
+                    <div class="filter-service-radiobuttons-group">
+                        <input class="filter-radiobutton" name='isKitchen' value="unknown" type="radio" {% if request.GET.isKitchen == 'unknown' or not request.GET.isKitchen %} checked="checked" {% endif %}>
+                        <input class="filter-radiobutton" name='isKitchen' value="true" type="radio" {% if request.GET.isKitchen == 'true' %} checked="checked" {% endif %}>
+                        <input class="filter-radiobutton" name='isKitchen' value="false" type="radio" {% if request.GET.isKitchen == 'false' %} checked="checked" {% endif %}>
+                    </div>
+
+                </div>
+
+                <div class="filter-service-row alternative-filter-service-row">
+                    <img class="service-thumbnailimage filter-service-thumbnailimage" title='Conditioner' src="{% static 'booking/images/air-conditioner.svg' %}">
+                    <div class="filter-service-radiobuttons-group">
+                        <input class="filter-radiobutton" name='isConditioner' value="unknown" type="radio" {% if request.GET.isConditioner == 'unknown' or not request.GET.isConditioner %} checked="checked" {% endif %}>
+                        <input class="filter-radiobutton" name='isConditioner' value="true" type="radio" {% if request.GET.isConditioner == 'true' %} checked="checked" {% endif %}>
+                        <input class="filter-radiobutton" name='isConditioner' value="false" type="radio" {% if request.GET.isConditioner == 'false' %} checked="checked" {% endif %}>
+                    </div>
+
+                </div>
+
+                <div class="filter-service-row">
+                    <img class="service-thumbnailimage filter-service-thumbnailimage" title='Breakfast' src="{% static 'booking/images/mug.svg' %}">
+                    <div class="filter-service-radiobuttons-group">
+                        <input class="filter-radiobutton" name='isBreakfast' value="unknown" type="radio" {% if request.GET.isBreakfast == 'unknown' or not request.GET.isBreakfast %} checked="checked" {% endif %}>
+                        <input class="filter-radiobutton" name='isBreakfast' value="true" type="radio" {% if request.GET.isBreakfast == 'true' %} checked="checked" {% endif %}>
+                        <input class="filter-radiobutton" name='isBreakfast' value="false" type="radio" {% if request.GET.isBreakfast == 'false' %} checked="checked" {% endif %}>
+                    </div>
+
+                </div>
+
+                <div class="filter-service-row alternative-filter-service-row" id="filter-service-last-row">
+                    <img class="service-thumbnailimage filter-service-thumbnailimage" title='Wi-Fi' src="{% static 'booking/images/wifi.svg' %}">
+                    <div class="filter-service-radiobuttons-group">
+                        <input class="filter-radiobutton" name='isWifi' value="unknown" type="radio" {% if request.GET.isWifi == 'unknown' or not request.GET.isWifi %} checked="checked" {% endif %}>
+                        <input class="filter-radiobutton" name='isWifi' value="true" type="radio" {% if request.GET.isWifi == 'true' %} checked="checked" {% endif %}>
+                        <input class="filter-radiobutton" name='isWifi' value="false" type="radio" {% if request.GET.isWifi == 'false' %} checked="checked" {% endif %}>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+
+        <div class="filter-table-block">
+            <div class="filter-lodging-type-block">
+            <div class="filter-lodging-type-header">
+                <p id="filter-lodging-type-header-text">Lodging Type</p>
+            </div>
+
+            <div class="filter-lodging-type-content-block">
+
+                <div class="filter-lodging-type-content-half">
+                    <div class="filter-lodging-type-check-box-block">
+                        <input class="filter-lodging-type-check-box" type="checkbox" name="lodging_type" value="F" id="flat_cb" {% if 'F' in request.GET|get_list:'lodging_type'%} checked="checked" {% endif %}>
+                        <label class="filter-form-label" for="flat_cb">Flat</label>
+                    </div>
+                    <div class="filter-lodging-type-spacer"></div>
+                    <div class="filter-lodging-type-check-box-block">
+                        <input class="filter-lodging-type-check-box" type="checkbox" name="lodging_type" value="HST" id="hostel_cb" {% if 'HST' in request.GET|get_list:'lodging_type'%} checked="checked" {% endif %}><label class="filter-form-label" for="hostel_cb">Hostel</label>
+                    </div>
+                </div>
+
+                <div class="filter-lodging-type-content-half">
+                    <div class="filter-lodging-type-check-box-block">
+                        <input class="filter-lodging-type-check-box" type="checkbox" name="lodging_type" value="HS" id="house_cb" {% if 'HS' in request.GET|get_list:'lodging_type'%} checked="checked" {% endif %}><label class="filter-form-label" for="house_cb">House</label>
+                    </div>
+                    <div class="filter-lodging-type-spacer"></div>
+                    <div class="filter-lodging-type-check-box-block">
+                        <input class="filter-lodging-type-check-box" type="checkbox" name="lodging_type" value="HR" id="hotel_room_cb" {% if 'HR' in request.GET|get_list:'lodging_type'%} checked="checked" {% endif %}><label class="filter-form-label" for="hotel_room_cb">Hotel room</label>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        </div>
+
+
+    <div id="filter-after-table-spacer"></div>
+    <div class="form-field filter-form-field">
+        <label class="filter-form-label" for="id_places">Places:</label>
+        <select class="form-input filter-form-input form-combobox" name="places" id="id_places">
+      <option value="" {% if request.GET.places == '' or not request.GET.places %} selected = "selected"{% endif %} >No matter</option>
+
+      <option value="1" {% if request.GET.places == '1' %} selected = "selected"{% endif %} >1</option>
+
+      <option value="2" {% if request.GET.places == '2' %} selected = "selected"{% endif %} >2</option>
+
+      <option value="3" {% if request.GET.places == '3' %} selected = "selected"{% endif %} >3</option>
+
+      <option value="4" {% if request.GET.places == '4' %} selected = "selected"{% endif %} >4</option>
+
+      <option value="5" {% if request.GET.places == '5' %} selected = "selected"{% endif %} >5</option>
+
+    </select>
+    </div>
+
+    <div class="form-field filter-form-field">
+        <label class="filter-form-label" for="id_o">Ordering:</label>
+        <select class="form-input filter-form-input form-combobox" name="o" id="id_o">
+
+            <option value="-date_created" {% if request.GET.o == '-date_created' or not request.GET.o %} selected = "selected"{% endif %} >Date (DESC)</option>
+            <option value="date_created" {% if request.GET.o == 'date_created'%} selected = "selected"{% endif %} >Date (ASC)</option>
+            <option value="-night_price" {% if request.GET.o == '-night_price' %} selected = "selected"{% endif %} >Price (DESC)</option>
+            <option value="night_price" {% if request.GET.o == 'night_price' %} selected = "selected"{% endif %} >Price (ASC)</option>
+
+
+
+    </select>
+    </div>
+
+      <div class="form-non-field-error"></div>
+
+      <div class="form-block-submit-button-block">
+      <button class="form-block-submit-button" type="submit">Search</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+</div>
+<div class="results-list">
+
+    {% for o in offers %}
+        <div class="offer-block">
+            <div class="offer-block-header">
+                <p class="offer-caption">{{o.name |truncatechars:40}}</p>
+                <div class="offer-price-info">
+                    <p class="offer-price-caption">{{o.night_price}} $</p>
+                    <p class="offer-price-additional-text-block">(per night)</p>
+                </div>
+            </div>
+
+                {% if o.image %}
+            <div class="offer-image">
+                <img src="{% get_media_prefix %}{{ o.image }}" class="offer-thumbnailimage">
+                <p class="offer-onimage" id="offer-onimage-text">{{ o.get_lodging_type_display}}</p>
+                <div class="offer-onimage" id="offer-onimage-persons">
+                    {% with ''|center:o.places as range %}
+                    {% for _ in range %}
+                    <img src="{% static 'booking/images/man_figure.svg' %}" class="offer-man-figure-image">
+                    {% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+
+                {% endif %}
+
+                <div class="offer-block-bottom-ribbon">
+                    {% if o.isKitchen or o.isConditioner or o.isBreakfast or o.isWifi %}
+                    <div class="offer-services-block">
+                         <div class="offer-service-spacer"></div>
+                    {%if o.isKitchen%}
+                        <img class="service-thumbnailimage" title='Kitchen' src="{% static 'booking/images/fork-spoon.svg' %}">
+                        <div class="offer-service-spacer"></div>
+                    {% endif %}
+                    {%if o.isConditioner%}
+                        <img class="service-thumbnailimage" title='Conditioner' src="{% static 'booking/images/air-conditioner.svg' %}">
+                         <div class="offer-service-spacer"></div>
+                    {% endif %}
+                    {%if o.isBreakfast%}
+                        <img class="service-thumbnailimage" title='Breakfast' src="{% static 'booking/images/mug.svg' %}">
+                         <div class="offer-service-spacer"></div>
+                    {% endif %}
+                    {%if o.isWifi%}
+                        <img class="service-thumbnailimage" title='Wi-Fi' src="{% static 'booking/images/wifi.svg' %}">
+                         <div class="offer-service-spacer"></div>
+                    {% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="offer-buttons">
+                        <a class="offer-button" id="book-button" href="{% url 'booking:book' o.slug %}">Book</a>
+                        <div class="offer-button-spacer"></div>
+                        <a class="offer-button" id="details-button" href="{{o.get_absolute_url}}">Details</a>
+                    </div>
+                    </div>
+
+                </div>
+        {% endfor %}
+            </div>
+
+{% endblock content %}
