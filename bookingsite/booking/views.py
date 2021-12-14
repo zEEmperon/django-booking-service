@@ -15,6 +15,7 @@ from django_filters.views import FilterView
 class IndexFilterView(DataMixin, FilterView):
         template_name = 'booking/index.html'
         context_object_name = 'offers'
+        paginate_by = 2
 
         def get_queryset(self):
             return Offer.objects.filter(isPublished=True).order_by('-date_created')

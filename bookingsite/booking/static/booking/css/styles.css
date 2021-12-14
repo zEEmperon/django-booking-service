@@ -759,3 +759,45 @@ body {
 .rejected-text-style {
     color: #ad1100;
 }
+
+.page-navigation-block {
+    margin-left: 3%;
+    display: flex;
+    justify-content: center;
+}
+
+.page-index-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5vw;
+    padding: 1vw 1.5vw;
+    border-radius: 2vw;
+    margin-right: 1vw;
+
+}
+
+.page-index-block-unselected {
+    background-color: #5674A8;
+    color: white;
+    text-decoration: none;
+}
+
+.page-index-block-unselected:hover {
+    background-color: #003580;
+}
+
+.page-index-block-selected {
+    background-color: #99BEF2;
+    color: white;
+}
+
+.page-index-more-margin {
+    margin-right: 1.8vw;
+    margin-left: 0.8vw;
+    background-color: #354e7a;
+}
+
+.page-index-more-margin:hover {
+    background-color: #00204d;
+}
