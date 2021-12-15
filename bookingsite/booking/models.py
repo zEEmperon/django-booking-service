@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
-from datetime import date
+from django.utils import timezone
 
 class Offer(models.Model):
 
@@ -83,7 +83,7 @@ class Booking(models.Model):
         return (self.departure_date - self.arrival_date).days * self.offer.night_price
 
     def is_past_due(self):
-        return date.today() >= self.arrival_date
+        return timezone.now().date() >= self.arrival_date
 
     def __str__(self):
         return str(self.pk) + ' ' + self.offer.name

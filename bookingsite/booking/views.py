@@ -107,7 +107,8 @@ def delete_booking_view(request, pk):
     if request.user.is_authenticated:
         booking = Booking.objects.get(pk=pk)
         if booking and booking.user.pk is request.user.pk:
-            booking.delete()
+            if booking.state == Booking.BOOKING_STATES[0][0] and not booking.is_past_due():
+                booking.delete()
     return redirect('booking:profile')
 
 class ProfileView (LoginRequiredMixin,DataMixin, generic.ListView):
