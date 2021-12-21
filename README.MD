@@ -1,5 +1,5 @@
 Dependecies:
 
-django
-django-filter
+django,
+django-filter,
 pillow
